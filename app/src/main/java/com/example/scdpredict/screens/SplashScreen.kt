@@ -5,7 +5,9 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -16,10 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.R
 import com.example.scdpredict.navigation.Screen
+import com.example.scdpredict.ui.theme.SCDPredictTheme
 import kotlinx.coroutines.delay
 
 @Composable
@@ -54,18 +59,38 @@ fun animatedSplashScreen(navController: NavController){
 fun splash(
     modifier: Modifier
 ){
-    Box(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-    ){
-        Image(
-            modifier = Modifier
-                .size(200.dp)
-                .align(alignment = Alignment.Center)
-                .then(modifier), 
-            painter = painterResource(id = R.drawable.cover),
-            contentDescription = ""
-        )
+    Box(modifier = Modifier
+        .background(MaterialTheme.colorScheme.background)
+        .fillMaxSize()){
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+            ){
+                Image(
+                    modifier = Modifier
+                        .size(200.dp)
+                        .align(alignment = Alignment.Center)
+                        .then(modifier),
+                    painter = painterResource(id = R.drawable.cover),
+                    contentDescription = ""
+                )
+            }
+            NormalText(modifier = Modifier,
+                text = "Your SCD monitoring and predicting app" )
+        }
+    }
+
+
+}
+
+@Preview
+@Composable
+fun splashPreview(){
+    SCDPredictTheme() {
+        splash(modifier = Modifier)
     }
 }

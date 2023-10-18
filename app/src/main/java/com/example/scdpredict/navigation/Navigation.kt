@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.screens.animatedSplashScreen
-import com.example.scdpredict.screens.welcome
+import com.example.scdpredict.screens.Welcome
 
 @Composable
 fun Navigation(){
@@ -21,7 +21,7 @@ fun Navigation(){
         }
 
         composable(route = Screen.Welcome.route){
-            welcome()
+            Welcome()
         }
     }
 }

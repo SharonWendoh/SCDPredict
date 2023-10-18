@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.scdpredict.ui.theme.SCDPredictTheme
 
 @Composable
-fun normalText(
+fun NormalText(
     modifier: Modifier,
     text: String
 ){
@@ -21,11 +21,35 @@ fun normalText(
 
 }
 
+@Composable
+fun TitleText(
+    modifier: Modifier,
+    text: String
+){
+    Text(text = text,
+    style = MaterialTheme.typography.titleLarge,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .then(modifier)
+        )
+}
+
 @Preview
 @Composable
-fun normalTextPreview(){
+fun NormalTextPreview(){
     SCDPredictTheme() {
-        normalText(
+        NormalText(
+            modifier = Modifier,
+            text = "Sharon Wendoh"
+        )
+    }
+}
+
+@Preview
+@Composable
+fun TitleTextPreview(){
+    SCDPredictTheme() {
+        TitleText(
             modifier = Modifier,
             text = "Sharon Wendoh"
         )
