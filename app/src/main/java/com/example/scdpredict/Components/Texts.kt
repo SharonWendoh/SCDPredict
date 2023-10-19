@@ -34,6 +34,19 @@ fun TitleText(
         )
 }
 
+@Composable
+fun TextFieldLabel(
+    modifier: Modifier,
+   text: String
+){
+    Text(text = text,
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .then(modifier)
+    )
+}
+
 @Preview
 @Composable
 fun NormalTextPreview(){
@@ -50,6 +63,16 @@ fun NormalTextPreview(){
 fun TitleTextPreview(){
     SCDPredictTheme() {
         TitleText(
+            modifier = Modifier,
+            text = "Sharon Wendoh"
+        )
+    }
+}
+@Preview
+@Composable
+fun TextFieldLabelPreview(){
+    SCDPredictTheme() {
+        TextFieldLabel(
             modifier = Modifier,
             text = "Sharon Wendoh"
         )
