@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -23,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +37,7 @@ import com.example.scdpredict.ui.theme.SCDPredictTheme
 fun RoundedTextField(
     modifier: Modifier,
     placeholder: String,
+    icon: Painter
 ){
     var text by remember { mutableStateOf(TextFieldValue("")) }
     TextField(
@@ -48,15 +51,16 @@ fun RoundedTextField(
             text = newText
         },
         shape = RoundedCornerShape(20.dp),
-        modifier =Modifier
+        modifier = Modifier
             .border(BorderStroke(2.dp, Color.Black), shape = RoundedCornerShape(20.dp))
+            .fillMaxWidth()
             .then(modifier),
         placeholder = {
             Row(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.baseline_person_24),
+                    painter = icon,
                     contentDescription = "",
                     modifier = Modifier
                         .size(20.dp)
@@ -79,6 +83,7 @@ fun RoundedTextField(
 fun RoundedTextFieldPreview(){
     SCDPredictTheme() {
         RoundedTextField(modifier = Modifier,
-            placeholder = "example@gmail.com" )
+            placeholder = "example@gmail.com" ,
+            icon = painterResource(id = R.drawable.person))
     }
 }

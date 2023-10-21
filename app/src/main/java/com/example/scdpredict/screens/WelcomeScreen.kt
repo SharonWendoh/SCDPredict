@@ -25,46 +25,52 @@ import com.example.scdpredict.ui.theme.SCDPredictTheme
 @Composable
 fun Welcome(){
     SCDPredictTheme() {
-        Box(
+        Column (
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxSize(),
-
-            //contentAlignment = Alignment.Center
+                .fillMaxSize()
         ){
-            Column (
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxSize(),
+
+                //contentAlignment = Alignment.Center
             ){
-                //Spacer(modifier = Modifier.size(40.dp))
-                Image(
-                    painter = painterResource(id =  R.drawable.cover),
-                    contentDescription = "" ,
-                    modifier = Modifier
-                        .size(100.dp)
-                )
-                //Spacer(modifier = Modifier.size(40.dp))
+                Column (
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    //Spacer(modifier = Modifier.size(40.dp))
+                    Image(
+                        painter = painterResource(id =  R.drawable.cover),
+                        contentDescription = "" ,
+                        modifier = Modifier
+                            .size(100.dp)
+                    )
+                    //Spacer(modifier = Modifier.size(40.dp))
 
-                TitleText(modifier = Modifier,
-                    text = "Welcome to SCDPredict" )
-                //Spacer(modifier = Modifier.size(40.dp))
+                    TitleText(modifier = Modifier,
+                        text = "Welcome to SCDPredict" )
+                    //Spacer(modifier = Modifier.size(40.dp))
 
-                Image(
-                    painter = painterResource(id = R.drawable.welcome_image),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(400.dp))
-                //Spacer(modifier = Modifier.size(40.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.welcome_image),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(400.dp))
+                    //Spacer(modifier = Modifier.size(40.dp))
 
-                ButtonWithRoundedCorner(
-                    text = "Get Started  ->",
-                    modifier = Modifier
-                )
+                    ButtonWithRoundedCorner(
+                        text = "Get Started  ->",
+                        modifier = Modifier
+                    )
 
-                NormalText(modifier =Modifier,
-                    text = "Already have an account? Sign in.")
+                    NormalText(modifier =Modifier,
+                        text = "Already have an account? Sign in.")
+                }
             }
         }
+
     }
 
 
