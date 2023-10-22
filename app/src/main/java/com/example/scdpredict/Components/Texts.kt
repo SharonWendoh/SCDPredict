@@ -47,6 +47,19 @@ fun TextFieldLabel(
     )
 }
 
+@Composable
+fun MediumNumberText(
+    modifier: Modifier,
+    text: String
+){
+    Text(text = text,
+        style = MaterialTheme.typography.displayMedium,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .then(modifier)
+    )
+}
+
 @Preview
 @Composable
 fun NormalTextPreview(){
@@ -75,6 +88,16 @@ fun TextFieldLabelPreview(){
         TextFieldLabel(
             modifier = Modifier,
             text = "Sharon Wendoh"
+        )
+    }
+}
+@Preview
+@Composable
+fun MediumNumberTextPreview(){
+    SCDPredictTheme() {
+        MediumNumberText(
+            modifier = Modifier,
+            text = "88"
         )
     }
 }
