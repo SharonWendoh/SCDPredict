@@ -2,6 +2,7 @@ package com.example.scdpredict.Components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -87,7 +88,7 @@ fun MetricsCardView(
     Card (
         modifier = Modifier
             .padding(8.dp)
-            .size(100.dp, 180.dp),
+            .size(130.dp, 180.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.onBackground
@@ -97,29 +98,40 @@ fun MetricsCardView(
         ),
         border = null
     ){
-        Row {
+        Row (
+            modifier =  Modifier.padding(10.dp,0.dp)
+        ) {
             NormalText(modifier = Modifier,
                 text = title )
         }
         Spacer(modifier = Modifier.size(15.dp))
 
-        Row {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            modifier =  Modifier.padding(10.dp,0.dp)
+        ) {
             Image(
                 painter = icon,
                 contentDescription = "" ,
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(90.dp)
+                    .padding(15.dp, 0.dp)
+                   // .align(Alignment.CenterHorizontally)
             )
         }
         Spacer(modifier = Modifier.size(15.dp))
 
-        Row {
+        Row (
+            modifier =  Modifier.padding(10.dp,0.dp)
+        ){
             Column {
                 MediumNumberText(
                     modifier = Modifier,
                     text = score.toString() )
             }
-            Column {
+            Column (
+                verticalArrangement = Arrangement.Bottom
+            ){
                 NormalText(modifier = Modifier,
                     text = text )
             }
@@ -127,6 +139,57 @@ fun MetricsCardView(
     }
 }
 
+@Composable
+fun TrackerCardView(
+    icon: Painter,
+    title: String,
+    text: String
+){
+    Card (
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .height(80.dp),
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.onBackground
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp,
+        ),
+        border = null
+    ){
+        Row (
+            modifier = Modifier
+                .clickable(onClick = {})
+                .fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Image(
+                    painter = icon,
+                    contentDescription = "" ,
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(15.dp, 0.dp)
+                    // .align(Alignment.CenterHorizontally)
+                )
+            }
+            Column {
+                Row {
+                    TitleText(modifier = Modifier,
+                        text = title )
+                }
+                Spacer(modifier = Modifier.size(5.dp))
+
+                Row {
+                    NormalText(modifier = Modifier,
+                        text = text )
+                }
+            }
+        }
+    }
+}
 @Preview
 @Composable
 fun ScoreCardViewPreview(){
@@ -146,5 +209,16 @@ fun MetricsCardViewPreview(){
             "Heart Rate",
             "BPM",
             icon = painterResource(id = R.drawable.pulse))
+    }
+}
+
+@Preview
+@Composable
+fun TrackerCardViewPreview(){
+    SCDPredictTheme {
+        TrackerCardView(
+            painterResource(id = R.drawable.graph),
+            "Medication",
+            "Up to date")
     }
 }
