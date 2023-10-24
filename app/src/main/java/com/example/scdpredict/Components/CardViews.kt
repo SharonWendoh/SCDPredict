@@ -28,6 +28,50 @@ import com.example.scdpredict.R
 import com.example.scdpredict.ui.theme.SCDPredictTheme
 
 @Composable
+fun SimpleCardView(
+    icon: Painter,
+    text: String
+){
+    Card (
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .height(100.dp),
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.onBackground
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp,
+        ),
+        border = null
+    ){
+        Row (
+            modifier = Modifier
+                .clickable(onClick = {})
+                .fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Image(
+                    painter = icon,
+                    contentDescription = "" ,
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(15.dp, 0.dp)
+                    // .align(Alignment.CenterHorizontally)
+                )
+            }
+            Column {
+                Row {
+                    TitleText(modifier = Modifier,
+                        text = text )
+                }
+            }
+        }
+    }
+}
+@Composable
 fun ScoreCardView(
     score: Int,
     title: String,
@@ -188,6 +232,16 @@ fun TrackerCardView(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun SimpleCardViewPreview(){
+    SCDPredictTheme {
+        SimpleCardView(
+            painterResource(id = R.drawable.graph),
+            "New Prediction")
     }
 }
 @Preview

@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,6 +37,8 @@ import androidx.navigation.NavController
 import com.example.scdpredict.R
 import com.example.scdpredict.dataClasses.BottomNavigationItems
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.scdpredict.viewmodels.BottomAppBarViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,6 +72,37 @@ fun TopAppBar(
         scrollBehavior = scrollBehavior
         )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BackNavigateTopAppBar(
+    title : String
+){
+    CenterAlignedTopAppBar(
+        title = {
+            Text(text = title)
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = {}) {
+                Icon(painter = painterResource(
+                    id = R.drawable.backarrow) ,
+                    contentDescription = "")
+            }
+        },
+        actions = {
+            IconButton(onClick = { /* do something */ }) {
+                Icon(
+                    painter = painterResource(
+                        id = R.drawable.more
+                    ),
+                    contentDescription = ""
+                )
+            }
+        }
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomAppBar(
@@ -96,6 +130,7 @@ fun BottomAppBar(
         hasNews = true,
         )
     )
+    //val viewModel: BottomAppBarViewModel = rememberViewModel()
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
     }
@@ -141,6 +176,15 @@ fun BottomAppBarPreview(){
         )
     }
 }
+
+@Preview
+@Composable
+fun BackNavigateTopAppBarPreview(){
+    SCDPredictTheme {
+        BackNavigateTopAppBar(title = "New")
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
@@ -151,3 +195,4 @@ fun TopAppBarPreview(){
         )
     }
 }
+
