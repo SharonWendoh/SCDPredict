@@ -60,6 +60,19 @@ fun MediumNumberText(
     )
 }
 
+@Composable
+fun LargeNumberText(
+    modifier: Modifier,
+    text: String
+){
+    Text(text = text,
+        style = MaterialTheme.typography.displayLarge,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .then(modifier)
+    )
+}
+
 @Preview
 @Composable
 fun NormalTextPreview(){
@@ -96,6 +109,17 @@ fun TextFieldLabelPreview(){
 fun MediumNumberTextPreview(){
     SCDPredictTheme() {
         MediumNumberText(
+            modifier = Modifier,
+            text = "88"
+        )
+    }
+}
+
+@Preview
+@Composable
+fun LargeNumberTextPreview() {
+    SCDPredictTheme() {
+        LargeNumberText(
             modifier = Modifier,
             text = "88"
         )

@@ -235,6 +235,38 @@ fun TrackerCardView(
     }
 }
 
+@Composable
+fun LargeCardView(){
+    Card (
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp),
+        shape = RoundedCornerShape(0.dp, 0.dp, 20.dp, 20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.onBackground
+        ),
+        border = null
+    ) {
+        Column (
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row {
+                LargeNumberText(
+                    modifier = Modifier,
+                    text = "88")
+            }
+            Row {
+                TitleText(
+                    modifier = Modifier,
+                    text = "You are a healthy individual")
+            }
+        }
+    }
+}
+
 @Preview
 @Composable
 fun SimpleCardViewPreview(){
@@ -274,5 +306,13 @@ fun TrackerCardViewPreview(){
             painterResource(id = R.drawable.graph),
             "Medication",
             "Up to date")
+    }
+}
+
+@Preview
+@Composable
+fun LargeCardViewPreview(){
+    SCDPredictTheme {
+        LargeCardView()
     }
 }
