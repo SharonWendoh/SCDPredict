@@ -45,15 +45,18 @@ fun RoundedTextField(
         maxLines = 1,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = MaterialTheme.colorScheme.onBackground,
-            textColor = MaterialTheme.colorScheme.primary
+            textColor = MaterialTheme.colorScheme.primary,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
         ),
         onValueChange = {newText ->
             text = newText
         },
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
-            .border(BorderStroke(2.dp, Color.Black), shape = RoundedCornerShape(20.dp))
+            .border(BorderStroke(2.dp, Color.Transparent), shape = RoundedCornerShape(20.dp))
             .fillMaxWidth()
+          //  .padding(8.dp)
             .then(modifier),
         placeholder = {
             Row(
