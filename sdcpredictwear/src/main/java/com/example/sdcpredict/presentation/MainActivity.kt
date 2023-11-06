@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
@@ -27,6 +28,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.example.sdcpredict.R
+import com.example.sdcpredict.presentation.screens.MeasuredPage
 import com.example.sdcpredict.presentation.theme.SCDPredictTheme
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.*
@@ -49,7 +51,8 @@ class MainActivity : ComponentActivity() {
 //        }
 
         setContent {
-            WearApp("Android")
+            MeasuredPage(icon = painterResource(id = R.drawable.heart_pulse))
+
         }
     }
 }
@@ -85,5 +88,5 @@ fun Greeting(greetingName: String) {
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    WearApp("Preview Android")
+    MeasuredPage(icon = painterResource(id = R.drawable.heart_pulse))
 }
