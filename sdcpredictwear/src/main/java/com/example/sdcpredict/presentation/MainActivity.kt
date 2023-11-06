@@ -7,6 +7,7 @@
 package com.example.sdcpredict.presentation
 
 import android.os.Bundle
+import android.view.inputmethod.InputBinding
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -31,6 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.*
 
 class MainActivity : ComponentActivity() {
+    //private lateinit var binding: ActivityMainBinding
 
     var supportsHeartRate: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {

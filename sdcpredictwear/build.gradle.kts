@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("dagger.hilt.android.plugin")
+    id ("kotlin-kapt")
+    //kotlin("kapt")
 }
 
 android {
@@ -73,4 +76,14 @@ dependencies {
     implementation("com.google.guava:guava:31.0.1-android")
     //Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
+    implementation ("androidx.concurrent:concurrent-futures-ktx:1.1.0")
+
+    //Hilt Dependency Injection
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt ("com.google.dagger:hilt-android-compiler:2.48.1")
+    implementation ("androidx.hilt:hilt-work:1.0.0")
+    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+
+    //Lifecycle
+    implementation ("androidx.lifecycle:lifecycle-service:2.6.2")
 }
