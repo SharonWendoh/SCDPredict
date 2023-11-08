@@ -1,9 +1,10 @@
-package com.example.sdcpredict.presentation
+package com.example.sdcpredict.presentation.data
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import androidx.concurrent.futures.await
-import androidx.health.services.client.HealthServicesClient
+import androidx.health.services.client.HealthServices
 import androidx.health.services.client.MeasureCallback
 import androidx.health.services.client.data.Availability
 import androidx.health.services.client.data.DataPointContainer
@@ -11,21 +12,16 @@ import androidx.health.services.client.data.DataType
 import androidx.health.services.client.data.DataTypeAvailability
 import androidx.health.services.client.data.DeltaDataType
 import androidx.health.services.client.data.SampleDataPoint
-import androidx.health.services.client.getCapabilities
-import androidx.health.services.client.unregisterMeasureCallback
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
-class HealthServicesManager @Inject constructor(
-    healthServicesClient: HealthServicesClient
-){
+class HealthServicesRepository(context: Context){
+    private val healthServicesClient = HealthServices.getClient(context)
     private val measureClient = healthServicesClient.measureClient
 
-    suspend fun hasHeartRateCompaibility(): Boolean{
+    suspend fun hasHeartRateCompatibility(): Boolean {
         val capabilities = measureClient.getCapabilitiesAsync().await()
         return (DataType.HEART_RATE_BPM in capabilities.supportedDataTypesMeasure)
     }
@@ -37,7 +33,7 @@ class HealthServicesManager @Inject constructor(
      *
      * [callbackFlow] is used to bridge between a callback-based API and Kotlin flows.
      */
-    @ExperimentalCoroutinesApi
+
     fun heartRateMeasureFlow() = callbackFlow {
         val callback = object : MeasureCallback {
             override fun onAvailabilityChanged(
@@ -45,7 +41,7 @@ class HealthServicesManager @Inject constructor(
                 availability: Availability
             ) {
                 // Only send back DataTypeAvailability (not LocationAvailability)
-                if (availability is DataTypeAvailability){
+                if (availability is DataTypeAvailability) {
                     trySendBlocking(MeasureMessage.MeasureAvailability(availability))
                 }
             }
@@ -59,16 +55,16 @@ class HealthServicesManager @Inject constructor(
         Log.d(TAG, "Registering for data")
         measureClient.registerMeasureCallback(DataType.HEART_RATE_BPM, callback)
 
-        awaitClose(){
+        awaitClose {
             Log.d(TAG, "Unregistering for data")
             runBlocking {
-                measureClient.unregisterMeasureCallbackAsync(DataType.HEART_RATE_BPM ,callback)
+                measureClient.unregisterMeasureCallbackAsync(DataType.HEART_RATE_BPM, callback)
+                    .await()
             }
         }
     }
 }
-
 sealed class MeasureMessage {
-    class MeasureAvailability(val availability: DataTypeAvailability) :MeasureMessage()
-    class MeasureData(val data: List<SampleDataPoint<Double>>) :MeasureMessage()
+    class MeasureAvailability(val availability: DataTypeAvailability) : MeasureMessage()
+    class MeasureData(val data: List<SampleDataPoint<Double>>) : MeasureMessage()
 }
