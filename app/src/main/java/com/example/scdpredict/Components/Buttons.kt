@@ -54,9 +54,10 @@ fun Button(
 @Composable
 fun ButtonWithRoundedCorner(
     text: String,
-    modifier: Modifier
+    modifier: Modifier,
+    onclick : () -> Unit
 ){
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = onclick,
         shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .padding(20.dp)
@@ -75,7 +76,8 @@ fun ButtonWithRoundedCornerPreview(){
               SCDPredictTheme {
                   ButtonWithRoundedCorner(
                       "Rounded Button",
-                      modifier = Modifier)
+                      modifier = Modifier,
+                      onclick = {})
 
               }
 }

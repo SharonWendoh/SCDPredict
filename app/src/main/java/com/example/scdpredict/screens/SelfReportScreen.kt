@@ -133,7 +133,8 @@ fun SelfReport(){
             item {
                 ButtonWithRoundedCorner(
                     text = "Save",
-                    modifier = Modifier)
+                    modifier = Modifier,
+                    onclick = {})
             }
         }
     }

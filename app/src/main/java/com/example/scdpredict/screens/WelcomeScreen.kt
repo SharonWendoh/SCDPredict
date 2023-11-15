@@ -16,14 +16,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.TitleText
 import com.example.scdpredict.R
+import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable
-fun Welcome(){
+fun Welcome(
+    navController: NavController,
+    viewModel: CRUDViewmodel
+){
     SCDPredictTheme() {
         Column (
             modifier = Modifier
@@ -62,7 +68,8 @@ fun Welcome(){
 
                     ButtonWithRoundedCorner(
                         text = "Get Started  ->",
-                        modifier = Modifier
+                        modifier = Modifier,
+                        onclick = {navController.navigate(route = Screen.Register.route)}
                     )
 
                     NormalText(modifier =Modifier,
@@ -76,10 +83,11 @@ fun Welcome(){
 
 }
 
+/*
 @Preview
 @Composable
 fun WelcomePreview(){
     SCDPredictTheme {
         Welcome()
     }
-}
+}*/

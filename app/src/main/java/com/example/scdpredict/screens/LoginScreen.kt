@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.HorizontalLineWithText
 import com.example.scdpredict.Components.IconBox
@@ -26,10 +27,12 @@ import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable
 fun Login(
-
+    navController: NavController,
+    viewModel: CRUDViewmodel
 ){
     Column (
         modifier = Modifier
@@ -71,7 +74,8 @@ fun Login(
 
             ButtonWithRoundedCorner(
                 text = "Sign In" ,
-                modifier = Modifier)
+                modifier = Modifier,
+                onclick = {})
             Spacer(modifier = Modifier.size(10.dp))
 
             HorizontalLineWithText(
@@ -101,10 +105,11 @@ fun Login(
 
 }
 
+/*
 @Preview
 @Composable
 fun LoginPreview(){
     SCDPredictTheme {
         Login()
     }
-}
+}*/

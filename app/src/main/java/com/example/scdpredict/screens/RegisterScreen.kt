@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.HorizontalLineWithText
 import com.example.scdpredict.Components.IconBox
@@ -24,10 +26,14 @@ import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
+import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable
 fun Register(
+    navController: NavController,
+    viewModel: CRUDViewmodel
 
 ){
     Column (
@@ -82,7 +88,10 @@ fun Register(
 
             ButtonWithRoundedCorner(
                 text = "Sign Up" ,
-                modifier = Modifier
+                modifier = Modifier,
+                onclick = {
+                    navController.navigate(route = Screen.Login.route)
+                }
             )
             Spacer(modifier = Modifier.size(10.dp))
 
@@ -94,10 +103,11 @@ fun Register(
 
 }
 
+/*
 @Preview
 @Composable
 fun RegisterPreview(){
     SCDPredictTheme {
         Register()
     }
-}
+}*/
