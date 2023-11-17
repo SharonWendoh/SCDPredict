@@ -1,9 +1,16 @@
 package com.example.scdpredict.Components
 
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.scdpredict.ui.theme.SCDPredictTheme
 
@@ -72,7 +79,20 @@ fun LargeNumberText(
             .then(modifier)
     )
 }
-
+@Composable
+fun LinkText(
+    text: AnnotatedString,
+    modifier: Modifier,
+    onclick: (Int) -> Unit
+)
+{
+    ClickableText(
+        text = text,
+        style = MaterialTheme.typography.bodySmall,
+        modifier = Modifier
+            .then(modifier),
+        onClick = onclick)
+}
 @Preview
 @Composable
 fun NormalTextPreview(){
@@ -122,6 +142,31 @@ fun LargeNumberTextPreview() {
         LargeNumberText(
             modifier = Modifier,
             text = "88"
+        )
+    }
+}
+
+@Preview
+@Composable
+fun LinkTextPreview() {
+    SCDPredictTheme() {
+        LinkText(
+            modifier = Modifier,
+            onclick = {},
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(
+                    color = MaterialTheme.colorScheme.primary),
+                ) {
+                    append("Already have an account?")
+                }
+                withStyle(style = SpanStyle(
+                    textDecoration = TextDecoration.Underline,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary)
+                ) {
+                    append(" Sign in.")
+                }
+            }
         )
     }
 }

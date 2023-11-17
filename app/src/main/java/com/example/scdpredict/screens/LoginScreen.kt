@@ -20,6 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -27,6 +32,7 @@ import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.HorizontalLineWithText
 import com.example.scdpredict.Components.IconBox
 import com.example.scdpredict.Components.LargeTopBox
+import com.example.scdpredict.Components.LinkText
 import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
@@ -138,7 +144,7 @@ fun Login(
             Row (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(50.dp,6.dp),
+                    .padding(50.dp, 6.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ){
                 IconBox(logo = painterResource(id = R.drawable.facebook))
@@ -147,8 +153,26 @@ fun Login(
             }
             Spacer(modifier = Modifier.size(15.dp))
 
-            NormalText(modifier =Modifier,
-                text = "Already have an account? Sign in.")
+            LinkText(
+                modifier = Modifier,
+                onclick = {
+                    navController.navigate(route = Screen.Register.route)
+                },
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(
+                        color = MaterialTheme.colorScheme.primary),
+                    ) {
+                        append("Don't have an account?")
+                    }
+                    withStyle(style = SpanStyle(
+                        textDecoration = TextDecoration.Underline,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary)
+                    ) {
+                        append("Register.")
+                    }
+                }
+            )
         }
 
     }
