@@ -69,7 +69,7 @@ fun Welcome(
                     ButtonWithRoundedCorner(
                         text = "Get Started  ->",
                         modifier = Modifier,
-                        onclick = {navController.navigate(route = Screen.Register.route)}
+                        onclick = {navController.navigate(route = Screen.Login.route)}
                     )
 
                     NormalText(modifier =Modifier,

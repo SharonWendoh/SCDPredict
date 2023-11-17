@@ -7,6 +7,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.scdpredict.screens.Home
 import com.example.scdpredict.screens.Login
 import com.example.scdpredict.screens.Register
 import com.example.scdpredict.screens.animatedSplashScreen
@@ -43,6 +44,9 @@ fun Navigation(
             Register(
                 navController = navController,
                 viewModel = crudViewModel )
+        }
+        composable(route = Screen.Home.route){
+            Home()
         }
     }
 }

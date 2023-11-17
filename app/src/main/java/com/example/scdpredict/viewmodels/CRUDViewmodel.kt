@@ -60,6 +60,35 @@ class CRUDViewmodel(): ViewModel() {
         }
     }
 
+    fun login(
+        userID: String,
+        email: String,
+        password: String,
+        context: Context,
+        data: (UserData) -> Unit
+    ){
+        val fireStoreRef = Firebase.firestore
+            .collection("user")
+            .document(userID)
+        try {
+            fireStoreRef.get()
+                .addOnSuccessListener {
+                    if (it.exists()){
+                        val userData = it.toObject<UserData>()!!
+                        if(userData != null && userData.email == email && userData.password == password){
+                            data(userData)
+                        } else {
+                            Toast.makeText(context, "Invalid email or password", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(context, "No user Data found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+        } catch (e: Exception){
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        }
+    }
     fun deleteData(
         userID: String,
         context: Context,
