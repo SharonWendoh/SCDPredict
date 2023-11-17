@@ -11,13 +11,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.HorizontalLineWithText
 import com.example.scdpredict.Components.IconBox
@@ -28,6 +34,7 @@ import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.util.UserData
 import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable
@@ -36,6 +43,15 @@ fun Register(
     viewModel: CRUDViewmodel
 
 ){
+    var userID: String by remember { mutableStateOf("") }
+    //var name: String by remember { mutableStateOf("") }
+    var email: String by remember { mutableStateOf("") }
+    var age: String by remember { mutableStateOf("") }
+    var gender: String by remember { mutableStateOf("") }
+    var password: String by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -52,12 +68,32 @@ fun Register(
         ){
             TextFieldLabel(
                 modifier = Modifier,
+                text = "Name"
+            )
+            Spacer(modifier = Modifier.size(5.dp))
+            RoundedTextField(
+                modifier = Modifier,
+                placeholder = "enter your full names",
+                value = userID,
+                onValueChange = {
+                    userID = it
+                },
+                icon = painterResource(id = R.drawable.person)
+            )
+            Spacer(modifier = Modifier.size(15.dp))
+
+            TextFieldLabel(
+                modifier = Modifier,
                 text = "Email Address"
             )
             Spacer(modifier = Modifier.size(5.dp))
             RoundedTextField(
                 modifier = Modifier,
                 placeholder = "enter your email address",
+                value = email,
+                onValueChange = {
+                    email = it
+                },
                 icon = painterResource(id = R.drawable.mail)
             )
             Spacer(modifier = Modifier.size(15.dp))
@@ -70,6 +106,10 @@ fun Register(
             RoundedTextField(
                 modifier = Modifier,
                 placeholder = "***********",
+                value = password,
+                onValueChange = {
+                    password = it
+                },
                 icon = painterResource(id = R.drawable.lock)
             )
             Spacer(modifier = Modifier.size(15.dp))
@@ -82,6 +122,10 @@ fun Register(
             RoundedTextField(
                 modifier = Modifier,
                 placeholder = "***********",
+                value = "",
+                onValueChange = {
+                   // userID = it
+                },
                 icon = painterResource(id = R.drawable.lock)
             )
             Spacer(modifier = Modifier.size(15.dp))
@@ -90,6 +134,12 @@ fun Register(
                 text = "Sign Up" ,
                 modifier = Modifier,
                 onclick = {
+                    val userData = UserData(
+                        userID = userID,
+                        email = email,
+                        password = password
+                    )
+                    viewModel.saveData(userData, context = context)
                     navController.navigate(route = Screen.Login.route)
                 }
             )
@@ -103,11 +153,13 @@ fun Register(
 
 }
 
-/*
 @Preview
 @Composable
 fun RegisterPreview(){
     SCDPredictTheme {
-        Register()
+        Register(
+            navController = rememberNavController(),
+            viewModel = CRUDViewmodel()
+        )
     }
-}*/
+}

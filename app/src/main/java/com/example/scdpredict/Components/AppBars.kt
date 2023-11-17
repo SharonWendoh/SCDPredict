@@ -38,6 +38,7 @@ import com.example.scdpredict.R
 import com.example.scdpredict.dataClasses.BottomNavigationItems
 import com.example.scdpredict.ui.theme.SCDPredictTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.viewmodels.BottomAppBarViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 
@@ -76,6 +77,7 @@ fun TopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackNavigateTopAppBar(
+    navController: NavController,
     title : String
 ){
     CenterAlignedTopAppBar(
@@ -84,7 +86,7 @@ fun BackNavigateTopAppBar(
         },
         navigationIcon = {
             IconButton(
-                onClick = {}) {
+                onClick = {navController.popBackStack()}) {
                 Icon(painter = painterResource(
                     id = R.drawable.backarrow) ,
                     contentDescription = "")
@@ -181,7 +183,8 @@ fun BottomAppBarPreview(){
 @Composable
 fun BackNavigateTopAppBarPreview(){
     SCDPredictTheme {
-        BackNavigateTopAppBar(title = "New")
+        BackNavigateTopAppBar(title = "New",
+            navController = rememberNavController())
     }
 }
 

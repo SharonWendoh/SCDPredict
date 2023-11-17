@@ -56,6 +56,8 @@ fun Login(
             RoundedTextField(
                 modifier = Modifier,
                 placeholder = "example@gmail.com",
+                value = "",
+                onValueChange = {},
                 icon = painterResource(id = R.drawable.person)
             )
             Spacer(modifier = Modifier.size(15.dp))
@@ -68,6 +70,8 @@ fun Login(
             RoundedTextField(
                 modifier = Modifier,
                 placeholder = "***********",
+                value = "",
+                onValueChange = {},
                 icon = painterResource(id = R.drawable.lock)
             )
             Spacer(modifier = Modifier.size(15.dp))

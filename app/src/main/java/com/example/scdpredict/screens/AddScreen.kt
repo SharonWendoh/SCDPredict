@@ -13,6 +13,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.BackNavigateTopAppBar
 import com.example.scdpredict.Components.BottomAppBar
 import com.example.scdpredict.Components.SimpleCardView
@@ -22,13 +24,15 @@ import com.example.scdpredict.ui.theme.SCDPredictTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScreen(){
+fun AddScreen(
+    navController: NavController
+){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { BackNavigateTopAppBar(title = "New")
+        topBar = { BackNavigateTopAppBar(title = "New", navController = navController)
         },
         bottomBar = { BottomAppBar(onNavigationItemClick = {}) } ,
 
@@ -56,6 +60,6 @@ fun AddScreen(){
 @Composable
 fun AddScreenPreview(){
     SCDPredictTheme {
-        AddScreen()
+        AddScreen(navController = rememberNavController())
     }
 }

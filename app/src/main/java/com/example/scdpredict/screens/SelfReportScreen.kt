@@ -17,6 +17,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.BackNavigateTopAppBar
 import com.example.scdpredict.Components.BottomAppBar
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
@@ -29,13 +31,18 @@ import com.example.scdpredict.ui.theme.SCDPredictTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelfReport(){
+fun SelfReport(
+    navController: NavController
+){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { BackNavigateTopAppBar(title = "New Self Report")
+        topBar = {
+            BackNavigateTopAppBar(
+                title = "New Self Report",
+                navController = navController)
         },
         bottomBar = { BottomAppBar(onNavigationItemClick = {}) } ,
     ){
@@ -67,6 +74,8 @@ fun SelfReport(){
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
+                    value = "",
+                    onValueChange = {},
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -79,6 +88,8 @@ fun SelfReport(){
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
+                    value = "",
+                    onValueChange = {},
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -91,6 +102,8 @@ fun SelfReport(){
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
+                    value = "",
+                    onValueChange = {},
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -103,6 +116,8 @@ fun SelfReport(){
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
+                    value = "",
+                    onValueChange = {},
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -115,6 +130,8 @@ fun SelfReport(){
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
+                    value = "",
+                    onValueChange = {},
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -127,6 +144,8 @@ fun SelfReport(){
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
+                    value = "",
+                    onValueChange = {},
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -143,6 +162,6 @@ fun SelfReport(){
 @Composable
 fun SelfReportPreview(){
     SCDPredictTheme {
-        SelfReport()
+        SelfReport(navController = rememberNavController())
     }
 }

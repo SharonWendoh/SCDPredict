@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,11 +38,12 @@ import com.example.scdpredict.ui.theme.SCDPredictTheme
 fun RoundedTextField(
     modifier: Modifier,
     placeholder: String,
+    value: String,
+    onValueChange: (String) -> Unit,
     icon: Painter
 ){
-    var text by remember { mutableStateOf(TextFieldValue("")) }
     TextField(
-        value = text,
+        value = value,
         maxLines = 1,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = MaterialTheme.colorScheme.onBackground,
@@ -49,8 +51,7 @@ fun RoundedTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
         ),
-        onValueChange = {newText ->
-            text = newText
+        onValueChange = {onValueChange(it)
         },
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
@@ -87,6 +88,9 @@ fun RoundedTextFieldPreview(){
     SCDPredictTheme() {
         RoundedTextField(modifier = Modifier,
             placeholder = "example@gmail.com" ,
+            "",
+            onValueChange = {
+            },
             icon = painterResource(id = R.drawable.person))
     }
 }
