@@ -16,11 +16,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.navigation.Navigation
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.viewmodels.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     private lateinit var navController: NavHostController
     private val crudViewmodel: CRUDViewmodel by viewModels ()
+    private val authViewModel by viewModels<AuthViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +36,9 @@ class MainActivity : ComponentActivity() {
 
                 Navigation(
                     crudViewModel = crudViewmodel,
-                    navController = navController)
+                    navController = navController,
+                    authViewModel = authViewModel
+                )
             }
         }
     }

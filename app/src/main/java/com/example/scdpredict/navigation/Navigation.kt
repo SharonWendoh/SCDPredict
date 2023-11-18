@@ -12,12 +12,14 @@ import com.example.scdpredict.screens.Login
 import com.example.scdpredict.screens.Register
 import com.example.scdpredict.screens.animatedSplashScreen
 import com.example.scdpredict.screens.Welcome
+import com.example.scdpredict.viewmodels.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable
 fun Navigation(
     crudViewModel: CRUDViewmodel,
-    navController: NavHostController
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
 ){
    // val navController = rememberNavController()
 
@@ -38,15 +40,22 @@ fun Navigation(
         composable(route = Screen.Login.route){
             Login(
                 navController = navController,
-                viewModel = crudViewModel)
+                viewModel = crudViewModel,
+                authViewModel = authViewModel
+            )
         }
         composable(route = Screen.Register.route){
             Register(
                 navController = navController,
-                viewModel = crudViewModel )
+                viewModel = crudViewModel,
+                authViewModel = authViewModel
+            )
         }
         composable(route = Screen.Home.route){
-            Home()
+            Home(
+                navController = navController,
+                authViewModel = authViewModel
+            )
         }
     }
 }

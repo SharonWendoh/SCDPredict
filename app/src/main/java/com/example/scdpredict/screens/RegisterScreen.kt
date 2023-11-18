@@ -1,5 +1,6 @@
 package com.example.scdpredict.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,8 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,23 +42,28 @@ import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
+import com.example.scdpredict.data.Resource
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
 import com.example.scdpredict.util.UserData
+import com.example.scdpredict.viewmodels.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable
 fun Register(
     navController: NavController,
-    viewModel: CRUDViewmodel
+    viewModel: CRUDViewmodel,
+    authViewModel: AuthViewModel?
 
 ){
-    var userID: String by remember { mutableStateOf("") }
-    //var name: String by remember { mutableStateOf("") }
+    //var userID: String by remember { mutableStateOf("") }
+    var name: String by remember { mutableStateOf("") }
     var email: String by remember { mutableStateOf("") }
-    var age: String by remember { mutableStateOf("") }
-    var gender: String by remember { mutableStateOf("") }
+    //var age: String by remember { mutableStateOf("") }
+    //var gender: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
+
+    val signupFlow = authViewModel?.signupFlow?.collectAsState()
 
     val context = LocalContext.current
 
@@ -80,9 +89,9 @@ fun Register(
             RoundedTextField(
                 modifier = Modifier,
                 placeholder = "enter your full names",
-                value = userID,
+                value = name,
                 onValueChange = {
-                    userID = it
+                    name = it
                 },
                 icon = painterResource(id = R.drawable.person)
             )
@@ -140,13 +149,14 @@ fun Register(
                 text = "Sign Up" ,
                 modifier = Modifier,
                 onclick = {
-                    val userData = UserData(
+                    authViewModel?.signup(name, email, password)
+                    /*val userData = UserData(
                         userID = userID,
                         email = email,
                         password = password
                     )
                     viewModel.saveData(userData, context = context)
-                    navController.navigate(route = Screen.Login.route)
+                    navController.navigate(route = Screen.Login.route)*/
                 }
             )
             Spacer(modifier = Modifier.size(10.dp))
@@ -172,7 +182,28 @@ fun Register(
                 }
             )
         }
+        signupFlow?.value?.let {
+            when(it){
+                is Resource.Failure -> {
+                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
+                }
+                Resource.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+                is Resource.Success ->{
+                    LaunchedEffect(Unit){
+                        navController.navigate(route = Screen.Home.route){
+                            //Prevents signup screen from appearing again when back button is pressed
+                            popUpTo(route = Screen.Home.route){ inclusive = true}
+                        }
+                    }
+                }
 
+            }
+        }
     }
 
 }
@@ -183,7 +214,8 @@ fun RegisterPreview(){
     SCDPredictTheme {
         Register(
             navController = rememberNavController(),
-            viewModel = CRUDViewmodel()
+            viewModel = CRUDViewmodel(),
+            authViewModel = null
         )
     }
 }
