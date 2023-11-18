@@ -1,5 +1,6 @@
 package com.example.scdpredict.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +31,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.HorizontalLineWithText
 import com.example.scdpredict.Components.IconBox
@@ -37,14 +41,17 @@ import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
+import com.example.scdpredict.data.Resource
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.viewmodels.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable
 fun Login(
     navController: NavController,
-    viewModel: CRUDViewmodel
+    viewModel: CRUDViewmodel,
+    authViewModel: AuthViewModel?
 ){
     var userID: String by remember { mutableStateOf("") }
     //var name: String by remember { mutableStateOf("") }
@@ -53,6 +60,9 @@ fun Login(
     //var gender: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
     val context = LocalContext.current
+
+    val loginFlow = authViewModel?.loginFlow?.collectAsState()
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -67,7 +77,7 @@ fun Login(
                 .padding(29.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            TextFieldLabel(
+            /*TextFieldLabel(
                 modifier = Modifier,
                 text = "Name"
             )
@@ -81,7 +91,7 @@ fun Login(
                 },
                 icon = painterResource(id = R.drawable.person)
             )
-            Spacer(modifier = Modifier.size(15.dp))
+            Spacer(modifier = Modifier.size(15.dp))*/
 
             TextFieldLabel(
                 modifier = Modifier,
@@ -119,18 +129,7 @@ fun Login(
                 text = "Sign In" ,
                 modifier = Modifier,
                 onclick = {
-                    viewModel.login(
-                        userID = userID,
-                        email = email,
-                        password = password,
-                        context = context
-                    ){
-                        /*data ->
-                        userID = data.userID
-                        email = data.email
-                        password = data.password*/
-                    }
-                    navController.navigate(route = Screen.Home.route)
+                    authViewModel?.login(email, password)
                 })
             Spacer(modifier = Modifier.size(10.dp))
 
@@ -175,15 +174,41 @@ fun Login(
             )
         }
 
+        loginFlow?.value?.let {
+            when(it){
+                is Resource.Failure -> {
+                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
+                }
+                    Resource.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                        )
+                    }
+                is Resource.Success ->{
+                    LaunchedEffect(Unit){
+                        navController.navigate(route = Screen.Home.route){
+                            //Prevents login screen from appearing again when back button is pressed
+                            popUpTo(route = Screen.Home.route){ inclusive = true}
+                        }
+                    }
+                }
+
+            }
+        }
+
     }
 
 }
 
-/*
 @Preview
 @Composable
 fun LoginPreview(){
     SCDPredictTheme {
-        Login()
+        Login(
+            navController = rememberNavController(),
+            authViewModel = null,
+            viewModel = CRUDViewmodel()
+        )
     }
-}*/
+}

@@ -2,6 +2,7 @@ package com.example.scdpredict.Components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -45,12 +46,17 @@ import com.google.android.material.bottomappbar.BottomAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
+    userName: String,
+    logoutOnClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior
 ){
 
     MediumTopAppBar(
         title = {
-            Text(text = "Hello, Sharon")
+            Row(){
+                Text(text = "Hello, ")
+                Text(text = userName)
+            }
         },
         navigationIcon = {
             IconButton(
@@ -65,7 +71,7 @@ fun TopAppBar(
                 Icon(painter = painterResource(id = R.drawable.notification),
                     contentDescription = "Notifications" )
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = logoutOnClick) {
                 Icon(painter = painterResource(id = R.drawable.settings),
                     contentDescription = "Settings" )
             }
@@ -194,7 +200,9 @@ fun BackNavigateTopAppBarPreview(){
 fun TopAppBarPreview(){
     SCDPredictTheme {
         TopAppBar(
-            scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+            userName = "Sharon",
+            scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+            logoutOnClick = {}
         )
     }
 }

@@ -17,6 +17,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.BottomAppBar
 import com.example.scdpredict.Components.MetricsCardView
 import com.example.scdpredict.Components.ScoreCardView
@@ -24,18 +26,30 @@ import com.example.scdpredict.Components.TitleText
 import com.example.scdpredict.Components.TopAppBar
 import com.example.scdpredict.Components.TrackerCardView
 import com.example.scdpredict.R
+import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.viewmodels.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Home(){
+fun Home(
+    navController: NavController,
+    authViewModel: AuthViewModel?
+){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = { TopAppBar(
-            scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+            userName = authViewModel?.currentUser?.displayName ?: "",
+            scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+            logoutOnClick = {
+                authViewModel?.logout()
+                navController.navigate(route = Screen.Login.route){
+                    popUpTo(route = Screen.Home.route)
+                }
+            }
         )},
         bottomBar = { BottomAppBar(onNavigationItemClick = {}) } ,
 
@@ -91,6 +105,9 @@ fun Home(){
 @Composable
 fun HomePreview(){
     SCDPredictTheme {
-        Home()
+        Home(
+            navController = rememberNavController(),
+            authViewModel = null
+        )
     }
 }
