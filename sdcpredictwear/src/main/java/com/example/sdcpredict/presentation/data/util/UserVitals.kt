@@ -1,4 +1,3 @@
-/*
 package com.example.sdcpredict.presentation.util
 
 data class UserVitals(
@@ -6,4 +5,4 @@ data class UserVitals(
     var heartRate: String = "",
 
 ) {
-}*/
+}
