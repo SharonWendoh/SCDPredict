@@ -87,6 +87,11 @@ dependencies {
     implementation ("androidx.hilt:hilt-work:1.0.0")
     kapt ("androidx.hilt:hilt-compiler:1.0.0")
 
+
+    //firebase
+    implementation (platform("com.google.firebase:firebase-bom:30.3.1"))
+    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation ("com.google.firebase:firebase-firestore:24.9.1")
     //Lifecycle
     implementation ("androidx.lifecycle:lifecycle-service:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
