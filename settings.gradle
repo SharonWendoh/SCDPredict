@@ -28,3 +28,4 @@ dependencyResolutionManagement {
 rootProject.name = "SCDPredict"
 include ':app'
 include ':sdcpredictwear'
+include ':sharedLibrary'

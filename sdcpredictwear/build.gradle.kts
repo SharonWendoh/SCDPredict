@@ -72,6 +72,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    // shared library
+    implementation (project(":sharedLibrary"))
+
     // Health Services
     implementation("androidx.health:health-services-client:1.1.0-alpha01")
 

@@ -42,7 +42,7 @@ import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
-import com.example.scdpredict.data.Resource
+import com.example.sharedlibrary.data.Resource
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
 import com.example.scdpredict.util.UserData
