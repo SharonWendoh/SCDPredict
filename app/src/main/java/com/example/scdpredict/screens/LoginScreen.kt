@@ -1,5 +1,6 @@
 package com.example.scdpredict.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
@@ -37,31 +39,37 @@ import com.example.scdpredict.Components.HorizontalLineWithText
 import com.example.scdpredict.Components.IconBox
 import com.example.scdpredict.Components.LargeTopBox
 import com.example.scdpredict.Components.LinkText
-import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
 import com.example.sharedlibrary.data.Resource
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
-import com.example.scdpredict.viewmodels.AuthViewModel
+import com.example.sharedlibrary.data.utils.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
+import com.example.sharedlibrary.data.google_sign_in.SignInState
+import com.example.sharedlibrary.data.google_sign_in.SignInViewmodel
 
 @Composable
 fun Login(
     navController: NavController,
-    viewModel: CRUDViewmodel,
+    //viewModel: CRUDViewmodel,
+    onGoogleSignInClick: () -> Unit,
+    state: SignInState,
     authViewModel: AuthViewModel?
 ){
     var userID: String by remember { mutableStateOf("") }
-    //var name: String by remember { mutableStateOf("") }
     var email: String by remember { mutableStateOf("") }
-    //var age: String by remember { mutableStateOf("") }
-    //var gender: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
     val context = LocalContext.current
 
     val loginFlow = authViewModel?.loginFlow?.collectAsState()
+
+    LaunchedEffect(key1 = state.signInError){
+        state.signInError?.let{
+                error -> Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+        }
+    }
 
     Column (
         modifier = Modifier
@@ -146,9 +154,15 @@ fun Login(
                     .padding(50.dp, 6.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ){
-                IconBox(logo = painterResource(id = R.drawable.facebook))
-                IconBox(logo = painterResource(id = R.drawable.google))
-                IconBox(logo = painterResource(id = R.drawable.facebook))
+                IconBox(
+                    logo = painterResource(id = R.drawable.facebook),
+                    onClick = {})
+                IconBox(
+                    logo = painterResource(id = R.drawable.google),
+                    onClick = {onGoogleSignInClick ()})
+                IconBox(
+                    logo = painterResource(id = R.drawable.facebook),
+                    onClick = {})
             }
             Spacer(modifier = Modifier.size(15.dp))
 
@@ -201,14 +215,15 @@ fun Login(
 
 }
 
-@Preview
+/*@Preview
 @Composable
 fun LoginPreview(){
     SCDPredictTheme {
         Login(
             navController = rememberNavController(),
             authViewModel = null,
+            state = null,
             viewModel = CRUDViewmodel()
         )
     }
-}
+}*/

@@ -1,4 +1,4 @@
-package com.example.scdpredict.viewmodels
+package com.example.sharedlibrary.data.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
