@@ -1,4 +1,4 @@
-package com.example.scdpredict.data.utils
+package com.example.sharedlibrary.data.utils
 
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.suspendCancellableCoroutine

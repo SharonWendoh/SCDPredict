@@ -1,10 +1,12 @@
 package com.example.scdpredict.Components
 
 import android.media.tv.TvContract.Channels.Logo
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -72,11 +74,13 @@ fun LargeTopBox(
 }
 @Composable
 fun IconBox(
-    logo: Painter
+    logo: Painter,
+    onClick: () -> Unit
 ){
     Box(modifier = Modifier
         .border(border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary))
         .clip(RoundedCornerShape(10.dp))
+        .clickable { onClick ()}
     ){
         Image(
             painter = logo,
@@ -102,7 +106,8 @@ fun LargeTopBoxPreview(){
 fun IconBoxPreview(){
     SCDPredictTheme {
         IconBox(
-logo = painterResource(id = R.drawable.google)
-            )
+            logo = painterResource(id = R.drawable.google),
+            onClick = {}
+        )
     }
 }

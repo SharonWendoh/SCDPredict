@@ -1,7 +1,7 @@
 package com.example.scdpredict.di
 
-import com.example.scdpredict.data.AuthRepository
-import com.example.scdpredict.data.AuthRepositoryImpl
+import com.example.sharedlibrary.data.AuthRepository
+import com.example.sharedlibrary.data.AuthRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides

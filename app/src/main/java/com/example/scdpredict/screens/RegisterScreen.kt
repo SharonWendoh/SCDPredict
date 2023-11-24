@@ -2,12 +2,9 @@ package com.example.scdpredict.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
@@ -30,23 +27,18 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
-import com.example.scdpredict.Components.HorizontalLineWithText
-import com.example.scdpredict.Components.IconBox
 import com.example.scdpredict.Components.LargeTopBox
 import com.example.scdpredict.Components.LinkText
-import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
-import com.example.scdpredict.data.Resource
+import com.example.sharedlibrary.data.Resource
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
-import com.example.scdpredict.util.UserData
-import com.example.scdpredict.viewmodels.AuthViewModel
+import com.example.sharedlibrary.data.utils.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
 
 @Composable

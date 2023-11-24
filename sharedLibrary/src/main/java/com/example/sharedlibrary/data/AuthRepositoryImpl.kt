@@ -1,6 +1,6 @@
-package com.example.scdpredict.data
+package com.example.sharedlibrary.data
 
-import com.example.scdpredict.data.utils.await
+import com.example.sharedlibrary.data.utils.await
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest

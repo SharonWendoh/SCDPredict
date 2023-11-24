@@ -1,4 +1,4 @@
-package com.example.scdpredict.data
+package com.example.sharedlibrary.data
 
 import com.google.firebase.auth.FirebaseUser
 

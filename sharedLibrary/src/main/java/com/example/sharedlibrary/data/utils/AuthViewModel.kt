@@ -1,9 +1,9 @@
-package com.example.scdpredict.viewmodels
+package com.example.sharedlibrary.data.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.scdpredict.data.AuthRepository
-import com.example.scdpredict.data.Resource
+import com.example.sharedlibrary.data.AuthRepository
+import com.example.sharedlibrary.data.Resource
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
