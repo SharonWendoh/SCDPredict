@@ -1,4 +1,4 @@
-package com.example.sharedlibrary.data
+package com.example.sharedlibrary.data.email_password_sign_in
 
 import com.google.firebase.auth.FirebaseUser
 

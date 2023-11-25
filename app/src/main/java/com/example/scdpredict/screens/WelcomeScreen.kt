@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.NormalText
 import com.example.scdpredict.Components.TitleText
@@ -83,11 +84,13 @@ fun Welcome(
 
 }
 
-/*
 @Preview
 @Composable
 fun WelcomePreview(){
     SCDPredictTheme {
-        Welcome()
+        Welcome(
+            navController = rememberNavController(),
+            viewModel = CRUDViewmodel()
+        )
     }
-}*/
+}

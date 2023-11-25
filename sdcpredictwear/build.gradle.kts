@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId = "com.example.sdcpredict"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         vectorDrawables {
@@ -33,11 +33,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "18"
     }
     buildFeatures {
         compose = true
@@ -76,6 +76,9 @@ dependencies {
     // shared library
     implementation (project(":sharedLibrary"))
 
+    //navigation
+    implementation ("androidx.wear.compose:compose-navigation:1.2.1")
+
     // Health Services
     implementation("androidx.health:health-services-client:1.1.0-alpha01")
 
@@ -88,13 +91,14 @@ dependencies {
     //Hilt Dependency Injection
     implementation("com.google.dagger:hilt-android:2.48.1")
     kapt ("com.google.dagger:hilt-android-compiler:2.48.1")
-    implementation ("androidx.hilt:hilt-work:1.0.0")
-    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+    implementation ("androidx.hilt:hilt-work:1.1.0")
+    kapt ("androidx.hilt:hilt-compiler:1.1.0")
 
 
     //firebase
     implementation (platform("com.google.firebase:firebase-bom:30.3.1"))
-    implementation ("com.google.firebase:firebase-auth-ktx")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
+    //implementation ("com.google.firebase:firebase-auth-ktx")
     implementation ("com.google.firebase:firebase-firestore:24.9.1")
     //Lifecycle
     implementation ("androidx.lifecycle:lifecycle-service:2.6.2")

@@ -1,9 +1,9 @@
-package com.example.sharedlibrary.data.utils
+package com.example.sharedlibrary.data.email_password_sign_in.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sharedlibrary.data.AuthRepository
-import com.example.sharedlibrary.data.Resource
+import com.example.sharedlibrary.data.email_password_sign_in.AuthRepository
+import com.example.sharedlibrary.data.email_password_sign_in.Resource
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

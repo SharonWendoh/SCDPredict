@@ -1,4 +1,4 @@
-package com.example.sharedlibrary.data.utils
+package com.example.sharedlibrary.data.email_password_sign_in.utils
 
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.suspendCancellableCoroutine

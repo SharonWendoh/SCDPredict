@@ -1,6 +1,6 @@
-package com.example.sharedlibrary.data
+package com.example.sharedlibrary.data.email_password_sign_in
 
-import com.example.sharedlibrary.data.utils.await
+import com.example.sharedlibrary.data.email_password_sign_in.utils.await
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest

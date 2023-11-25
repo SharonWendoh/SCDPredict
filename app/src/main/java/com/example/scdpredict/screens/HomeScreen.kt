@@ -26,7 +26,7 @@ import com.example.scdpredict.Components.TrackerCardView
 import com.example.scdpredict.R
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
-import com.example.sharedlibrary.data.utils.AuthViewModel
+import com.example.sharedlibrary.data.email_password_sign_in.utils.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -28,7 +28,7 @@ fun NormalText(
     text: String
 ){
     Text(text = text,
-        style = MaterialTheme.typography.body1,
+        style = MaterialTheme.typography.body2,
         color = MaterialTheme.colors.primary,
         textAlign = TextAlign.Center,
         modifier = Modifier
@@ -62,7 +62,8 @@ fun TitleTextPreview(){
 @Composable
 fun NormalTextPreview(){
     SCDPredictTheme {
-        NormalText(modifier = Modifier,
+        NormalText(
+            modifier = Modifier,
             text = "Heart Rate" )
     }
 }
