@@ -1,4 +1,4 @@
-package com.example.sharedlibrary.data
+package com.example.sharedlibrary.data.email_password_sign_in
 
 sealed class Resource<out R>{
     data class Success<out R>(val result: R): Resource<R>()

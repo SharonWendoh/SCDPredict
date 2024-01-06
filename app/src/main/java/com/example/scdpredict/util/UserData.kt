@@ -8,3 +8,8 @@ data class UserData(
     //var gender: String = "",
     var password: String = ""
 )
+data class Vitals(
+    var heartrate: String = "",
+    var respirationRate: String = "",
+    var painscore: String = ""
+)

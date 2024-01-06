@@ -46,11 +46,13 @@ fun AddScreen(
         ){
             SimpleCardView(
                 painterResource(id = R.drawable.plus),
-                "New Prediction")
+                "New Prediction",
+                onClick = {})
 
             SimpleCardView(
                 painterResource(id = R.drawable.plus),
-                "New Self Report")
+                "New Self Report",
+                onClick = {})
         }
     }
 

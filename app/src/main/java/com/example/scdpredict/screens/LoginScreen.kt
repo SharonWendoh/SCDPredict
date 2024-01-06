@@ -1,6 +1,5 @@
 package com.example.scdpredict.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,11 +28,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.Components.ButtonWithRoundedCorner
 import com.example.scdpredict.Components.HorizontalLineWithText
 import com.example.scdpredict.Components.IconBox
@@ -42,13 +38,10 @@ import com.example.scdpredict.Components.LinkText
 import com.example.scdpredict.Components.RoundedTextField
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
-import com.example.sharedlibrary.data.Resource
+import com.example.sharedlibrary.data.email_password_sign_in.Resource
 import com.example.scdpredict.navigation.Screen
-import com.example.scdpredict.ui.theme.SCDPredictTheme
-import com.example.sharedlibrary.data.utils.AuthViewModel
-import com.example.scdpredict.viewmodels.CRUDViewmodel
+import com.example.sharedlibrary.data.email_password_sign_in.utils.AuthViewModel
 import com.example.sharedlibrary.data.google_sign_in.SignInState
-import com.example.sharedlibrary.data.google_sign_in.SignInViewmodel
 
 @Composable
 fun Login(

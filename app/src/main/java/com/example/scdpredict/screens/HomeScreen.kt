@@ -10,8 +10,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,15 +32,38 @@ import com.example.scdpredict.Components.TrackerCardView
 import com.example.scdpredict.R
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
-import com.example.sharedlibrary.data.utils.AuthViewModel
+import com.example.scdpredict.util.Vitals
+import com.example.scdpredict.viewmodels.CRUDViewmodel
+import com.example.sharedlibrary.data.email_password_sign_in.utils.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(
     navController: NavController,
-    authViewModel: AuthViewModel?
+    authViewModel: AuthViewModel?,
+    vitalsViewModel: CRUDViewmodel
 ){
+    val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val userId = authViewModel?.currentUser?.uid
+
+    // Remember the vitals data to trigger recomposition when the data is updated
+    var vitalsData by remember(userId) {
+        mutableStateOf<Vitals?>(null)
+    }
+    // Retrieve user vitals when the composable is first launched
+    DisposableEffect(userId) {
+        if (userId != null) {
+            vitalsViewModel.retrieveUserVitals(
+                userId,
+                context = context  ) { vitals ->
+                vitalsData = vitals
+            }
+        }
+
+        // Cleanup effect
+        onDispose { }
+    }
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
@@ -62,7 +91,7 @@ fun Home(
             items(1){
                 index ->
                 ScoreCardView(
-                    88,
+                    vitalsData?.painscore?.toInt() ?:0,
                     "Wellness Score",
                     "Based on your data, we think your health status is above average")
                 Spacer(modifier = Modifier.size(5.dp))
@@ -76,7 +105,7 @@ fun Home(
                     items(5){
                         index ->
                         MetricsCardView(
-                            88,
+                            vitalsData?.heartrate?.toInt() ?: 0, // Use the actual property names based on your Vitals data class
                             "Heart Rate",
                             "BPM",
                             icon = painterResource(id = R.drawable.pulse)
@@ -105,7 +134,8 @@ fun HomePreview(){
     SCDPredictTheme {
         Home(
             navController = rememberNavController(),
-            authViewModel = null
+            authViewModel = null,
+            vitalsViewModel = CRUDViewmodel()
         )
     }
 }

@@ -7,6 +7,12 @@ import android.content.IntentSender
 import com.example.sharedlibrary.R
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.wearable.DataClient
+import com.google.android.gms.wearable.DataItem
+import com.google.android.gms.wearable.PutDataMapRequest
+import com.google.android.gms.wearable.PutDataRequest
+import com.google.android.gms.wearable.Wearable
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -39,14 +45,26 @@ class GoogleAuthUiClient (
         val credential = oneTapClient.getSignInCredentialFromIntent(intent)
         val googleIdToken = credential.googleIdToken
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
+
         return try{
             val user = auth.signInWithCredential(googleCredentials).await().user
+            val authTokenResult = user?.getIdToken(true)?.await()
+            val dataClient: DataClient = Wearable.getDataClient(context)
+            val putDataReq: PutDataRequest = PutDataMapRequest.create("/auth").run {
+                if (authTokenResult != null) {
+                    authTokenResult.token?.let { dataMap.putString("token", it) }
+                }
+                asPutDataRequest()
+            }
+            val putDataTask: Task<DataItem> = dataClient.putDataItem(putDataReq)
+
             SignInResult(
                 data = user?.run{
                     UserData(
                         userId = uid,
                         username = displayName,
-                        profilePictureUrl = photoUrl?.toString()
+                        profilePictureUrl = photoUrl?.toString(),
+                        //authToken = authTokenResult?.token
                     )
                 },
                 errorMessage = null
@@ -61,6 +79,15 @@ class GoogleAuthUiClient (
 
         }
     }
+    /*suspend fun sendAuthToken(token: String) {
+        val credential = oneTapClient.getSignInCredentialFromIntent(intent)
+        val googleIdToken = credential.googleIdToken
+        val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
+
+        val user = auth.signInWithCredential(googleCredentials).await().user
+        val authTokenResult = user?.getIdToken(true)?.await()
+        // Code to send authentication token to Wearable device
+    }*/
 
     suspend fun signOut(){
         try{
@@ -73,13 +100,31 @@ class GoogleAuthUiClient (
         }
     }
 
-    fun getSignedInUser(): UserData? = auth.currentUser?.run{
+    suspend fun getSignedInUser(): UserData? {
+        val currentUser = auth.currentUser ?: return null
+
+        val authTokenResult = try {
+            currentUser.getIdToken(true).await()
+        } catch (e: Exception) {
+            // Handle exceptions if needed
+            null
+        }
+
+        return UserData(
+            userId = currentUser.uid,
+            username = currentUser.displayName,
+            profilePictureUrl = currentUser.photoUrl?.toString(),
+            //authToken = authTokenResult?.token
+        )
+    }
+    /*fun getSignedInUser(): UserData? = auth.currentUser?.run{
         UserData(
             userId = uid,
             username = displayName,
-            profilePictureUrl = photoUrl?.toString()
+            profilePictureUrl = photoUrl?.toString(),
+            authToken =
         )
-    }
+    }*/
 
     private fun buildSignInRequest(): BeginSignInRequest {
         return BeginSignInRequest.Builder()

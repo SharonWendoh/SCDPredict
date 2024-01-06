@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.navigation.Navigation
 import com.example.scdpredict.ui.theme.SCDPredictTheme
-import com.example.sharedlibrary.data.utils.AuthViewModel
+import com.example.sharedlibrary.data.email_password_sign_in.utils.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 

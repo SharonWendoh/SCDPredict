@@ -9,6 +9,7 @@ package com.example.sdcpredict.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.example.sdcpredict.presentation.navigation.Navigation
 import com.example.sdcpredict.presentation.screens.WearApp
 
 
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
         val healthServicesRepository = (application as MainApplication).healthServicesRepository
 
         setContent {
-            WearApp(healthServicesRepository = healthServicesRepository)
+            Navigation()
+            //WearApp(healthServicesRepository = healthServicesRepository)
         }
     }
 }

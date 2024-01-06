@@ -30,13 +30,15 @@ import com.example.scdpredict.ui.theme.SCDPredictTheme
 @Composable
 fun SimpleCardView(
     icon: Painter,
-    text: String
+    text: String,
+    onClick: () -> Unit
 ){
     Card (
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .height(100.dp),
+            .height(100.dp)
+            .clickable { onClick ()},
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.onBackground
@@ -273,7 +275,8 @@ fun SimpleCardViewPreview(){
     SCDPredictTheme {
         SimpleCardView(
             painterResource(id = R.drawable.graph),
-            "New Prediction")
+            "New Prediction",
+            onClick = {})
     }
 }
 @Preview
