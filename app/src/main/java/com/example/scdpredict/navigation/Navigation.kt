@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.scdpredict.screens.Home
 import com.example.scdpredict.screens.Login
+import com.example.scdpredict.screens.Prediction
 import com.example.scdpredict.screens.Register
 import com.example.scdpredict.screens.animatedSplashScreen
 import com.example.scdpredict.screens.Welcome
@@ -121,7 +122,13 @@ fun Navigation(
         composable(route = Screen.Home.route){
             Home(
                 navController = navController,
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                vitalsViewModel = CRUDViewmodel()
+            )
+        }
+        composable(route = Screen.Prediction.route){
+            Prediction(
+                navController = navController
             )
         }
     }

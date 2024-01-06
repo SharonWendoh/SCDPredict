@@ -16,7 +16,6 @@ class SignInViewmodel : ViewModel() {
             signInError = result.errorMessage
         ) }
     }
-
     fun resetState(){
         _state.update { SignInState() }
     }

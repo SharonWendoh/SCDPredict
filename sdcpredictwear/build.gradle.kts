@@ -55,7 +55,7 @@ android {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
-    implementation("com.google.android.gms:play-services-wearable:18.1.0")
+    //implementation("com.google.android.gms:play-services-wearable:18.1.0")
     implementation("androidx.percentlayout:percentlayout:1.0.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
@@ -76,6 +76,9 @@ dependencies {
     // shared library
     implementation (project(":sharedLibrary"))
 
+    //Wearable Data Layer API
+    implementation ("com.google.android.gms:play-services-wearable:18.1.0")
+
     //navigation
     implementation ("androidx.wear.compose:compose-navigation:1.2.1")
 
@@ -87,6 +90,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
     implementation ("androidx.concurrent:concurrent-futures-ktx:1.1.0")
     implementation ("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     //Hilt Dependency Injection
     implementation("com.google.dagger:hilt-android:2.48.1")
@@ -103,6 +107,7 @@ dependencies {
     //Lifecycle
     implementation ("androidx.lifecycle:lifecycle-service:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.7.0-rc01")
 
     //permissions
     implementation("com.google.accompanist:accompanist-permissions:0.32.0")
