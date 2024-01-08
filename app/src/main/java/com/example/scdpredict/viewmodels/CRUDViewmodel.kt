@@ -72,7 +72,7 @@ class CRUDViewmodel(): ViewModel() {
     ) = CoroutineScope(Dispatchers.IO).launch{
 
         val fireStoreRef = Firebase.firestore
-            .collection("user")
+            .collection("Users")
             .document(userID)
 
         try {

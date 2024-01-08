@@ -78,7 +78,12 @@ fun Home(
                 }
             }
         )},
-        bottomBar = { BottomAppBar(onNavigationItemClick = {}) } ,
+        bottomBar = { BottomAppBar(
+            onHomeClick = {},
+            onAddClick = {
+                navController.navigate(route = Screen.Add.route)
+            },
+            onNewsClick = {} )} ,
 
     )
     {

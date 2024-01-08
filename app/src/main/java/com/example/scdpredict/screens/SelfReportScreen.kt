@@ -27,6 +27,7 @@ import com.example.scdpredict.Components.ScoreCardView
 import com.example.scdpredict.Components.SimpleSwitch
 import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
+import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +45,12 @@ fun SelfReport(
                 title = "New Self Report",
                 navController = navController)
         },
-        bottomBar = { BottomAppBar(onNavigationItemClick = {}) } ,
+        bottomBar = { BottomAppBar(
+            onHomeClick = {},
+            onAddClick = {
+                navController.navigate(route = Screen.Add.route)
+            },
+            onNewsClick = {}) } ,
     ){
             values -> PaddingValues(8.dp)
         LazyColumn(

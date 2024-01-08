@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +49,7 @@ fun SimpleCardView(
     ){
         Row (
             modifier = Modifier
-                .clickable(onClick = {})
+                .clickable{ onClick ()}
                 .fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -238,7 +237,9 @@ fun TrackerCardView(
 }
 
 @Composable
-fun LargeCardView(){
+fun LargeCardView(
+    score: Int,
+){
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -258,7 +259,7 @@ fun LargeCardView(){
             Row {
                 LargeNumberText(
                     modifier = Modifier,
-                    text = "88")
+                    text = score)
             }
             Row {
                 TitleText(
@@ -316,6 +317,6 @@ fun TrackerCardViewPreview(){
 @Composable
 fun LargeCardViewPreview(){
     SCDPredictTheme {
-        LargeCardView()
+        LargeCardView(score = 88)
     }
 }

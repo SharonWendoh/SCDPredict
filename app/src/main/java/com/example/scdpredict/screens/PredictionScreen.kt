@@ -8,6 +8,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -20,21 +22,30 @@ import com.example.scdpredict.Components.BottomAppBar
 import com.example.scdpredict.Components.LargeCardView
 import com.example.scdpredict.Components.TrackerCardView
 import com.example.scdpredict.R
+import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.viewmodels.LogRegViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Prediction(
-    navController: NavController
+    navController: NavController,
+    predictionViewModel: LogRegViewModel
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val predictionResult by predictionViewModel.predictionResult.collectAsState()
+
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = { BackNavigateTopAppBar(title = "Prediction", navController = navController)
         },
-        bottomBar = { BottomAppBar(onNavigationItemClick = {}) } ,
+        bottomBar = { BottomAppBar(onHomeClick = {},
+            onAddClick = {
+                navController.navigate(route = Screen.Add.route)
+            },
+            onNewsClick = {}) } ,
     ) { values ->
         PaddingValues(8.dp)
         LazyColumn(
@@ -43,7 +54,10 @@ fun Prediction(
                 .padding(values)
         ) {
             item{
-                LargeCardView()
+                LargeCardView(
+
+                    score = predictionResult
+                )
             }
             items(4){
                     index ->
@@ -56,10 +70,12 @@ fun Prediction(
     }
 }
 
+/*
 @Preview
 @Composable
 fun PredictionPreview(){
     SCDPredictTheme {
-        Prediction(navController = rememberNavController())
+        Prediction(navController = rememberNavController(),
+            predictionViewModel = null)
     }
-}
+}*/
