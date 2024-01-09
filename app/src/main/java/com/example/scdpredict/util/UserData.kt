@@ -1,8 +1,11 @@
 package com.example.scdpredict.util
 
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
+
 data class UserData(
     var userID: String = "",
-    //var name: String = "",
+    var name: String = "",
     var email: String = "",
     var age: String = "",
     var gender: String = "",
@@ -16,5 +19,6 @@ data class Vitals(
     var temperature: String = "",
     var painscore: String = "",
     var respirationRate: String = "",
+    var timestamp: Timestamp? = null
 
 )

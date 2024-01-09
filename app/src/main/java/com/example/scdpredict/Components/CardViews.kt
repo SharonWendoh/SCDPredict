@@ -188,7 +188,7 @@ fun MetricsCardView(
 fun TrackerCardView(
     icon: Painter,
     title: String,
-    text: String
+    score: Int
 ){
     Card (
         modifier = Modifier
@@ -229,7 +229,7 @@ fun TrackerCardView(
 
                 Row {
                     NormalText(modifier = Modifier,
-                        text = text )
+                        text = score.toString() )
                 }
             }
         }
@@ -309,7 +309,7 @@ fun TrackerCardViewPreview(){
         TrackerCardView(
             painterResource(id = R.drawable.graph),
             "Medication",
-            "Up to date")
+            88)
     }
 }
 

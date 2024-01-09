@@ -9,4 +9,5 @@ sealed class Screen(val route: String){
     object Prediction : Screen("prediction_screen")
     object SelfReport : Screen("self_report_screen")
     object Add : Screen("add_screen")
+    object UserProfile : Screen("user_profile_screen")
 }

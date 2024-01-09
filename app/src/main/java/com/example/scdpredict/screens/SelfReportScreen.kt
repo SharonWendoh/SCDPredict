@@ -11,9 +11,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,28 +34,54 @@ import com.example.scdpredict.Components.TextFieldLabel
 import com.example.scdpredict.R
 import com.example.scdpredict.navigation.Screen
 import com.example.scdpredict.ui.theme.SCDPredictTheme
+import com.example.scdpredict.util.Vitals
+import com.example.scdpredict.viewmodels.CRUDViewmodel
+import com.example.sharedlibrary.data.email_password_sign_in.utils.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelfReport(
-    navController: NavController
+    navController: NavController,
+    authViewModel: AuthViewModel?,
+    vitalsViewModel: CRUDViewmodel,
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val context = LocalContext.current
+    val userId = authViewModel?.currentUser?.uid
+
+    // Remember the vitals data to trigger recomposition when the data is updated
+    var vitalsData by remember(userId) {
+        mutableStateOf<Vitals?>(null)
+    }
+
+    var spo2: String by remember { mutableStateOf("") }
+    var systolic: String by remember { mutableStateOf("") }
+    var diastolic: String by remember { mutableStateOf("") }
+    var heartrate: String by remember { mutableStateOf("") }
+    var temperature: String by remember { mutableStateOf("") }
+    var painscore: String by remember { mutableStateOf("") }
+    var respirationRate: String by remember { mutableStateOf("") }
+    //painscore = vitalsData?.painscore.toString()
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+            //.nestedScroll(scrollBehavior.nestedScrollConnection)
+        ,
         topBar = {
             BackNavigateTopAppBar(
                 title = "New Self Report",
                 navController = navController)
         },
         bottomBar = { BottomAppBar(
-            onHomeClick = {},
+            onHomeClick = {
+                navController.navigate(route = Screen.Home.route)
+                          },
             onAddClick = {
                 navController.navigate(route = Screen.Add.route)
             },
-            onNewsClick = {}) } ,
+            onAccountClick = {
+                navController.navigate(route = Screen.UserProfile.route)
+            }) } ,
     ){
             values -> PaddingValues(8.dp)
         LazyColumn(
@@ -80,8 +111,10 @@ fun SelfReport(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
-                    value = "",
-                    onValueChange = {},
+                    value = painscore,
+                    onValueChange = {
+                        painscore = it
+                    },
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -89,13 +122,15 @@ fun SelfReport(
                 TextFieldLabel(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
-                    text = "Blood Pressure" )
+                    text = "Spo2" )
                 RoundedTextField(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
-                    value = "",
-                    onValueChange = {},
+                    value = spo2,
+                    onValueChange = {
+                        spo2 = it
+                    },
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -103,13 +138,15 @@ fun SelfReport(
                 TextFieldLabel(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
-                    text = "Pulse" )
+                    text = "Systolic" )
                 RoundedTextField(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
-                    value = "",
-                    onValueChange = {},
+                    value = systolic,
+                    onValueChange = {
+                        systolic = it
+                    },
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -117,13 +154,31 @@ fun SelfReport(
                 TextFieldLabel(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
-                    text = "Respiratory Rate" )
+                    text = "Diastolic" )
                 RoundedTextField(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
-                    value = "",
-                    onValueChange = {},
+                    value = diastolic,
+                    onValueChange = {
+                        diastolic = it
+                    },
+                    icon = painterResource(id = R.drawable.graph))
+                Spacer(modifier = Modifier.size(5.dp))
+            }
+            item {
+                TextFieldLabel(
+                    modifier = Modifier
+                        .padding(8.dp,2.dp),
+                    text = "Heart Rate" )
+                RoundedTextField(
+                    modifier = Modifier
+                        .padding(8.dp,2.dp),
+                    placeholder = "7",
+                    value = heartrate,
+                    onValueChange = {
+                        heartrate = it
+                    },
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -136,8 +191,10 @@ fun SelfReport(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
-                    value = "",
-                    onValueChange = {},
+                    value = temperature,
+                    onValueChange = {
+                        temperature = it
+                    },
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -145,13 +202,15 @@ fun SelfReport(
                 TextFieldLabel(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
-                    text = "Physical Activity" )
+                    text = "Respiration Rate" )
                 RoundedTextField(
                     modifier = Modifier
                         .padding(8.dp,2.dp),
                     placeholder = "7",
-                    value = "",
-                    onValueChange = {},
+                    value = respirationRate,
+                    onValueChange = {
+                        respirationRate = it
+                    },
                     icon = painterResource(id = R.drawable.graph))
                 Spacer(modifier = Modifier.size(5.dp))
             }
@@ -159,7 +218,22 @@ fun SelfReport(
                 ButtonWithRoundedCorner(
                     text = "Save",
                     modifier = Modifier,
-                    onclick = {})
+                    onclick = {
+                        val vitalsData = userId?.let {
+                            Vitals(
+                                spo2 = spo2,
+                                systolic = systolic,
+                                diastolic = diastolic,
+                                heartrate = heartrate,
+                                temperature = temperature,
+                                painscore = painscore,
+                                respirationRate = respirationRate
+                            )
+                        }
+                        if (vitalsData != null) {
+                            vitalsViewModel.saveVitalsData(userId,vitalsData, context )
+                        }
+                    })
             }
         }
     }
@@ -168,6 +242,10 @@ fun SelfReport(
 @Composable
 fun SelfReportPreview(){
     SCDPredictTheme {
-        SelfReport(navController = rememberNavController())
+        SelfReport(
+            navController = rememberNavController(),
+            authViewModel = null,
+            vitalsViewModel = CRUDViewmodel(),
+        )
     }
 }

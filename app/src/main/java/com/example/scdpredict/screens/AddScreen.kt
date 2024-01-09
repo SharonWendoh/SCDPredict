@@ -84,11 +84,15 @@ fun AddScreen(
         topBar = { BackNavigateTopAppBar(title = "New", navController = navController)
         },
         bottomBar = { BottomAppBar(
-            onHomeClick = {},
+            onHomeClick = {
+                navController.navigate(route = Screen.Home.route)
+            },
             onAddClick = {
                 navController.navigate(route = Screen.Add.route)
             },
-            onNewsClick = {}) } ,
+            onAccountClick = {
+                navController.navigate(route = Screen.UserProfile.route)
+            }) } ,
 
         ){
             values ->
@@ -113,7 +117,9 @@ fun AddScreen(
             SimpleCardView(
                 painterResource(id = R.drawable.plus),
                 "New Self Report",
-                onClick = {})
+                onClick = {
+                    navController.navigate(route = Screen.SelfReport.route)
+                })
         }
     }
 

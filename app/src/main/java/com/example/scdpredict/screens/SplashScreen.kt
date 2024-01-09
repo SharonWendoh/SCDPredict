@@ -61,7 +61,8 @@ fun splash(
 ){
     Box(modifier = Modifier
         .background(MaterialTheme.colorScheme.background)
-        .fillMaxSize()){
+        .fillMaxSize(),
+        contentAlignment = Alignment.Center){
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +76,7 @@ fun splash(
                         .size(200.dp)
                         .align(alignment = Alignment.Center)
                         .then(modifier),
-                    painter = painterResource(id = R.drawable.cover),
+                    painter = painterResource(id = R.drawable.blood_drop_by_mimooh),
                     contentDescription = ""
                 )
             }

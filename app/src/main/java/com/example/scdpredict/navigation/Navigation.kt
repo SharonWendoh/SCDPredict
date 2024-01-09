@@ -22,6 +22,8 @@ import com.example.scdpredict.screens.Home
 import com.example.scdpredict.screens.Login
 import com.example.scdpredict.screens.Prediction
 import com.example.scdpredict.screens.Register
+import com.example.scdpredict.screens.SelfReport
+import com.example.scdpredict.screens.UserProfile
 import com.example.scdpredict.screens.animatedSplashScreen
 import com.example.scdpredict.screens.Welcome
 import com.example.sharedlibrary.data.email_password_sign_in.utils.AuthViewModel
@@ -136,10 +138,26 @@ fun Navigation(
                 predictionViewModel = LogRegViewModel(context)
             )
         }
+        composable(route = Screen.SelfReport.route){
+            SelfReport(
+                navController =navController,
+                authViewModel = authViewModel,
+                vitalsViewModel = crudViewModel,
+                )
+        }
         composable(route = Screen.Prediction.route){
             Prediction(
                 navController = navController,
+                authViewModel = authViewModel,
+                vitalsViewModel = crudViewModel,
                 predictionViewModel = LogRegViewModel(context)
+            )
+        }
+        composable(route = Screen.UserProfile.route){
+            UserProfile(
+                navController = navController,
+                authViewModel = authViewModel,
+                vitalsViewModel = CRUDViewmodel()
             )
         }
     }

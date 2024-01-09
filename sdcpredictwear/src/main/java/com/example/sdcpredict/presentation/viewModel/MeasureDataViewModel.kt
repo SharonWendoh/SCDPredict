@@ -17,6 +17,7 @@ class MeasureDataViewModel (
 ) : ViewModel(){
     val enabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val hr: MutableState<Double> = mutableStateOf(0.0)
+    val spo2: MutableState<Double> = mutableStateOf(0.0)
     val availability: MutableState<DataTypeAvailability> =
         mutableStateOf((DataTypeAvailability.UNKNOWN))
     val uiState: MutableState<UiState> = mutableStateOf(UiState.Startup)
@@ -32,6 +33,49 @@ class MeasureDataViewModel (
         }
 
         viewModelScope.launch {
+            enabled.collect { isEnabled ->
+                if (isEnabled) {
+                    launchHeartRateMeasurement()
+                    launchSpO2Measurement()
+                }
+            }
+        }
+    }
+
+    private fun launchHeartRateMeasurement() {
+        viewModelScope.launch {
+            healthServicesRepository.heartRateMeasureFlow()
+                .takeWhile { enabled.value }
+                .collect { measureMessage ->
+                    when (measureMessage) {
+                        is MeasureMessage.MeasureData -> {
+                            hr.value = measureMessage.data.last().value
+                        }
+                        is MeasureMessage.MeasureAvailability -> {
+                            availability.value = measureMessage.availability
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun launchSpO2Measurement() {
+        viewModelScope.launch {
+            healthServicesRepository.spo2MeasureFlow()
+                .takeWhile { enabled.value }
+                .collect { measureMessage ->
+                    when (measureMessage) {
+                        is MeasureMessage.MeasureData -> {
+                            spo2.value = measureMessage.data.last().value
+                        }
+                        is MeasureMessage.MeasureAvailability -> {
+                            availability.value = measureMessage.availability
+                        }
+                    }
+                }
+        }
+    }
+        /*viewModelScope.launch {
             enabled.collect{
                 if (it){
                     healthServicesRepository.heartRateMeasureFlow()
@@ -49,7 +93,7 @@ class MeasureDataViewModel (
                 }
             }
         }
-    }
+    }*/
     fun toggleEnabled() {
         enabled.value = !enabled.value
         if (!enabled.value) {
