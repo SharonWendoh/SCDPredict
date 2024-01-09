@@ -7,7 +7,11 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -114,7 +118,9 @@ fun BackNavigateTopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomAppBar(
-    onNavigationItemClick: () -> Unit
+    onHomeClick: () -> Unit,
+    onAddClick: () -> Unit,
+    onAccountClick: () -> Unit
 ){
     val items = listOf(
 
@@ -125,16 +131,16 @@ fun BottomAppBar(
             hasNews = false,
         ),
         BottomNavigationItems(
-            title = "Home",
-            selectedIcon = Icons.Filled.Home,
-            unSelectedIcon = Icons.Outlined.Home,
+            title = "add",
+            selectedIcon = Icons.Filled.Add,
+            unSelectedIcon = Icons.Outlined.Add,
             hasNews = false,
             badgeCount = 45
         ),
         BottomNavigationItems(
-        title = "Home",
-        selectedIcon = Icons.Filled.Home,
-        unSelectedIcon = Icons.Outlined.Home,
+        title = "Account",
+        selectedIcon = Icons.Filled.AccountCircle,
+        unSelectedIcon = Icons.Outlined.AccountCircle,
         hasNews = true,
         )
     )
@@ -149,7 +155,11 @@ fun BottomAppBar(
                     selected = selectedItemIndex == index,
                     onClick = {
                               selectedItemIndex = index
-                        onNavigationItemClick
+                        when (index) {
+                            0 -> onHomeClick.invoke()
+                            1 -> onAddClick.invoke()
+                            2 -> onAccountClick.invoke()
+                        }
                     },
                     label = {
                             Text(text = item.title)
@@ -180,7 +190,9 @@ fun BottomAppBar(
 fun BottomAppBarPreview(){
     SCDPredictTheme {
         BottomAppBar(
-            onNavigationItemClick = {}
+            onHomeClick = {},
+            onAddClick = {},
+            onAccountClick = {}
         )
     }
 }

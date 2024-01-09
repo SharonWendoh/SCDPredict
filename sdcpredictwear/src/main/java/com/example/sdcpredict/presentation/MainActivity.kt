@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         val healthServicesRepository = (application as MainApplication).healthServicesRepository
 
         setContent {
-            Navigation()
+            Navigation(healthServicesRepository = healthServicesRepository)
             //WearApp(healthServicesRepository = healthServicesRepository)
         }
     }

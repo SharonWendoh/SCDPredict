@@ -66,8 +66,7 @@ fun Home(
     }
     Scaffold (
         modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+            .fillMaxSize(),
         topBar = { TopAppBar(
             userName = authViewModel?.currentUser?.displayName ?: "",
             scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
@@ -78,7 +77,16 @@ fun Home(
                 }
             }
         )},
-        bottomBar = { BottomAppBar(onNavigationItemClick = {}) } ,
+        bottomBar = { BottomAppBar(
+            onHomeClick = {
+                navController.navigate(route = Screen.Home.route)
+            },
+            onAddClick = {
+                navController.navigate(route = Screen.Add.route)
+            },
+            onAccountClick = {
+                navController.navigate(route = Screen.UserProfile.route)
+            } )} ,
 
     )
     {
@@ -102,13 +110,52 @@ fun Home(
                         .padding(10.dp, 5.dp),
                     text = "Smart Health Metrics" )
                 LazyRow(){
-                    items(5){
-                        index ->
+                    item{
                         MetricsCardView(
                             vitalsData?.heartrate?.toInt() ?: 0, // Use the actual property names based on your Vitals data class
                             "Heart Rate",
                             "BPM",
                             icon = painterResource(id = R.drawable.pulse)
+                        )
+                    }
+                    item{
+                        MetricsCardView(
+                            score =vitalsData?.diastolic?.toInt() ?: 0,
+                            title = "Diastolic" ,
+                            text = "bpm",
+                            icon = painterResource(id = R.drawable.blood_pressure)
+                        )
+                    }
+                    item{
+                        MetricsCardView(
+                            score =vitalsData?.systolic?.toInt() ?: 0,
+                            title = "systolic" ,
+                            text = "bpm",
+                            icon = painterResource(id = R.drawable.blood_pressure)
+                        )
+                    }
+                    item{
+                        MetricsCardView(
+                            score =vitalsData?.respirationRate?.toInt() ?: 0,
+                            title = "Respiration Rate" ,
+                            text = "bpm",
+                            icon = painterResource(id = R.drawable.respiratory)
+                        )
+                    }
+                    item{
+                        MetricsCardView(
+                            score =vitalsData?.spo2?.toInt() ?: 0,
+                            title = "SPO2" ,
+                            text = "bpm",
+                            icon = painterResource(id = R.drawable.oxygen_concentration)
+                        )
+                    }
+                    item{
+                        MetricsCardView(
+                            score =vitalsData?.temperature?.toInt() ?: 0,
+                            title = "Temperature" ,
+                            text = "bpm",
+                            icon = painterResource(id = R.drawable.temperature)
                         )
                     }
                 }
@@ -122,7 +169,7 @@ fun Home(
                 TrackerCardView(
                     painterResource(id = R.drawable.graph),
                     "Medication",
-                    "Up to date")
+                    0)
             }
         }
     }

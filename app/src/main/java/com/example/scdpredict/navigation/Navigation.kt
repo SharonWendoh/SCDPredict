@@ -17,14 +17,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.scdpredict.screens.AddScreen
 import com.example.scdpredict.screens.Home
 import com.example.scdpredict.screens.Login
 import com.example.scdpredict.screens.Prediction
 import com.example.scdpredict.screens.Register
+import com.example.scdpredict.screens.SelfReport
+import com.example.scdpredict.screens.UserProfile
 import com.example.scdpredict.screens.animatedSplashScreen
 import com.example.scdpredict.screens.Welcome
 import com.example.sharedlibrary.data.email_password_sign_in.utils.AuthViewModel
 import com.example.scdpredict.viewmodels.CRUDViewmodel
+import com.example.scdpredict.viewmodels.LogRegViewModel
 import com.example.sharedlibrary.data.google_sign_in.GoogleAuthUiClient
 import com.example.sharedlibrary.data.google_sign_in.SignInViewmodel
 import kotlinx.coroutines.launch
@@ -126,9 +130,34 @@ fun Navigation(
                 vitalsViewModel = CRUDViewmodel()
             )
         }
+        composable(route = Screen.Add.route){
+            AddScreen(
+                navController = navController,
+                authViewModel = authViewModel,
+                vitalsViewModel = crudViewModel,
+                predictionViewModel = LogRegViewModel(context)
+            )
+        }
+        composable(route = Screen.SelfReport.route){
+            SelfReport(
+                navController =navController,
+                authViewModel = authViewModel,
+                vitalsViewModel = crudViewModel,
+                )
+        }
         composable(route = Screen.Prediction.route){
             Prediction(
-                navController = navController
+                navController = navController,
+                authViewModel = authViewModel,
+                vitalsViewModel = crudViewModel,
+                predictionViewModel = LogRegViewModel(context)
+            )
+        }
+        composable(route = Screen.UserProfile.route){
+            UserProfile(
+                navController = navController,
+                authViewModel = authViewModel,
+                vitalsViewModel = CRUDViewmodel()
             )
         }
     }

@@ -70,9 +70,9 @@ fun MediumNumberText(
 @Composable
 fun LargeNumberText(
     modifier: Modifier,
-    text: String
+    text: Int
 ){
-    Text(text = text,
+    Text(text = text.toString(),
         style = MaterialTheme.typography.displayLarge,
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
@@ -141,7 +141,7 @@ fun LargeNumberTextPreview() {
     SCDPredictTheme() {
         LargeNumberText(
             modifier = Modifier,
-            text = "88"
+            text = 88
         )
     }
 }

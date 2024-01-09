@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.scdpredict.util.UserData
 import com.example.scdpredict.util.Vitals
+import com.example.sharedlibrary.data.email_password_sign_in.utils.await
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
@@ -24,15 +26,40 @@ class CRUDViewmodel(): ViewModel() {
     ) = CoroutineScope(Dispatchers.IO).launch{
 
         val fireStoreRef = Firebase.firestore
-            .collection("user")
+            .collection("Users")
             .document(userData.userID)
 
-        try {
-            fireStoreRef.set(userData)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Data successfully saved", Toast.LENGTH_SHORT).show()
-                }
 
+        try {
+            // Check if the document already exists
+            val documentSnapshot = fireStoreRef.get().await()
+            if (documentSnapshot.exists()) {
+                // Document exists, update the data
+                val updateData = mapOf(
+                    "userID" to userData.userID,
+                    "email" to userData.email,
+                    "name" to userData.name,
+                    "gender" to userData.gender,
+                    "age" to userData.age
+                    // Add other properties as needed
+                )
+                fireStoreRef.update(updateData)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Data successfully updated", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error updating data: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                // Document doesn't exist, save new data
+                fireStoreRef.set(userData)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Data successfully saved", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error saving data: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
         } catch (e: Exception){
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
         }
@@ -48,12 +75,15 @@ class CRUDViewmodel(): ViewModel() {
             .document(userID)
             .collection("vitals")
 
-        // Create a document with a timestamp as the ID and store vitals data
-        val timestamp = FieldValue.serverTimestamp()
-        val vitalsDocumentRef = fireStoreRef.document(timestamp.toString())
+        // Create a document with random document id
+        //var timestamp = FieldValue.serverTimestamp()
+        val vitalsDocumentRef = fireStoreRef.document()
 
         try {
-            vitalsDocumentRef.set(vitalsData)
+            // Add timestamp field to vitalsData
+            val vitalsDataWithTimestamp = vitalsData.copy(timestamp = Timestamp.now())
+
+            vitalsDocumentRef.set(vitalsDataWithTimestamp)
                 .addOnSuccessListener {
                     Toast.makeText(context, "Vitals Data successfully saved", Toast.LENGTH_SHORT).show()
                 }
@@ -72,7 +102,7 @@ class CRUDViewmodel(): ViewModel() {
     ) = CoroutineScope(Dispatchers.IO).launch{
 
         val fireStoreRef = Firebase.firestore
-            .collection("user")
+            .collection("Users")
             .document(userID)
 
         try {

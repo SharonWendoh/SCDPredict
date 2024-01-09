@@ -25,6 +25,10 @@ class HealthServicesRepository(context: Context){
         val capabilities = measureClient.getCapabilitiesAsync().await()
         return (DataType.HEART_RATE_BPM in capabilities.supportedDataTypesMeasure)
     }
+    suspend fun hasSpO2Compatibility(): Boolean {
+        val capabilities = measureClient.getCapabilitiesAsync().await()
+        return (DataType.VO2_MAX in capabilities.supportedDataTypesMeasure)
+    }
 
     /**
      * Returns a cold flow. When activated, the flow will register a callback for heart rate data
@@ -59,6 +63,35 @@ class HealthServicesRepository(context: Context){
             Log.d(TAG, "Unregistering for data")
             runBlocking {
                 measureClient.unregisterMeasureCallbackAsync(DataType.HEART_RATE_BPM, callback)
+                    .await()
+            }
+        }
+    }
+    fun spo2MeasureFlow() = callbackFlow {
+        val callback = object : MeasureCallback {
+            override fun onAvailabilityChanged(
+                dataType: DeltaDataType<*, *>,
+                availability: Availability
+            ) {
+                // Only send back DataTypeAvailability (not LocationAvailability)
+                if (availability is DataTypeAvailability) {
+                    trySendBlocking(MeasureMessage.MeasureAvailability(availability))
+                }
+            }
+
+            override fun onDataReceived(data: DataPointContainer) {
+                val spo2Data = data.getData(DataType.VO2_MAX)
+                trySendBlocking(MeasureMessage.MeasureData(spo2Data))
+            }
+        }
+
+        Log.d(TAG, "Registering for SpO2 data")
+        measureClient.registerMeasureCallback(DataType.VO2_MAX, callback)
+
+        awaitClose {
+            Log.d(TAG, "Unregistering for SpO2 data")
+            runBlocking {
+                measureClient.unregisterMeasureCallbackAsync(DataType.VO2_MAX, callback)
                     .await()
             }
         }
